@@ -1,9 +1,3 @@
-GuestID, HotelID
-6,3
-6,1
-6,1
-5,2
-5,1
-5,2
-3,2
-3,1
+ID, GuestID, HotelID
+1,2,2
+2,3,1

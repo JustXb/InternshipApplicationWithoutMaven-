@@ -4,17 +4,20 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import repository.entity.HotelEntity;
 import repository.impl.HotelJsonRepository;
+import transport.server.HotelServer;
 
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.List;
 
-public class HotelRequestService {
+public class HotelService {
     private static final int PORT = 12345;
     private static HotelJsonRepository hotelJsonRepository = new HotelJsonRepository();
+    private static HotelServer hotelServer = new HotelServer();
 
     public void responseHotels() {
+
         try (ServerSocket serverSocket = new ServerSocket(PORT)) {
             List<HotelEntity> hotels = hotelJsonRepository.loadHotelsFromFile();
             System.out.println("Сервис гостиницы запущен и ожидает подключения...");
@@ -61,19 +64,9 @@ public class HotelRequestService {
                 }
             }
         }
-        return false; // или false, в зависимости от логики
+        return false;
     }
 
-    /*public void decreaseAvailableRooms (int id) throws IOException {
-        List<HotelApplicationEntity> hotels;
-        ObjectMapper objectMapper = new ObjectMapper();
-        hotels = objectMapper.readValue(new File("hotelsAvialability.json"), new TypeReference<List<HotelApplicationEntity>>() {});
 
-        if (available > 0) {
-            available--;
-        } else {
-            throw new IllegalStateException("Нет доступных мест");
-        }*/
-    //}
 
 }

@@ -1,13 +1,13 @@
 
-import service.HotelRequestService;
+import service.HotelService;
 
 import java.io.*;
 
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        HotelRequestService hotelRequestService = new HotelRequestService();
-        hotelRequestService.responseHotels();
+        HotelService hotelService = new HotelService();
+        hotelService.responseHotels();
     }
 
 

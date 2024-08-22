@@ -125,7 +125,7 @@ public class GuestCsvRepository implements Repository {
 
 
     private boolean validatePassportNumber(String passportNumber) throws IOException {
-        if (passportNumber != null && passportNumber.length() == 10 && passportNumber.matches("\\d{10}")) {
+        if (passportNumber != null && passportNumber.length() == 6 && passportNumber.matches("\\d{6}")) {
         boolean passportExists = true;
 
         for (GuestEntity guest : guests) {
@@ -139,7 +139,7 @@ public class GuestCsvRepository implements Repository {
 
         return passportExists;
     } else {
-            System.out.println("Номер паспорта должен содержать ровно 10 цифр.");
+            System.out.println("Номер паспорта должен содержать ровно 6 цифр.");
             return false;
         }
     }

@@ -3,7 +3,9 @@ package service;
 
 import repository.entity.BookingEntity;
 import repository.entity.GuestEntity;
+import repository.impl.BookingCsvRepository;
 import repository.impl.GuestCsvRepository;
+import transport.client.impl.HotelSocketClientImpl;
 import transport.server.GuestServer;
 import util.CsvParser;
 
@@ -13,18 +15,22 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.List;
+import java.util.Properties;
 import java.util.Scanner;
 
-public class HotelRequestService {
 
-    private static GuestCsvRepository repository = new GuestCsvRepository("guest.csv");
+public class BookingService {
+    
+
+    private static GuestCsvRepository repositoryGuest = new GuestCsvRepository("guest.csv");
+    private static BookingCsvRepository repositoryBooking = new BookingCsvRepository("booking.csv");
     private static GuestServer server = new GuestServer();
     private static Scanner scanner = new Scanner(System.in);
     private static CsvParser csvParser = new CsvParser("booking.csv");
 
 
 
-    public HotelRequestService() {
+    public BookingService() {
 
     }
 
@@ -38,7 +44,7 @@ public class HotelRequestService {
         System.out.print("Enter passport number : ");
         String passport = scanner.nextLine();
         GuestEntity guest1 = new GuestEntity( firstName, age, passport, address);
-        repository.create(guest1);
+        repositoryGuest.create(guest1);
     }
 
 
@@ -49,7 +55,7 @@ public class HotelRequestService {
 
     public void checkIn() {
         try{
-            List<GuestEntity> guests = repository.getGuests();
+            List<GuestEntity> guests = repositoryGuest.getGuests();
             for(GuestEntity guest : guests){
                 guest.getInfo();
             }
@@ -57,8 +63,10 @@ public class HotelRequestService {
             System.out.println("Выберите гостя по его ID");
             int idGuest = Integer.parseInt(scanner.nextLine());
             System.out.println("Реквест к процессингу");
+
+            HotelSocketClientImpl client = new HotelSocketClientImpl();
+
             try {
-                // Создание сокета для подключения к сервису гостиницы
                 Socket socket = new Socket("localhost", 12345);
                 PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
                 BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -68,11 +76,8 @@ public class HotelRequestService {
                 int idHotel = Integer.parseInt(scanner.nextLine());
                 out.println(idHotel); // Отправка запроса о доступности гостиницы
                 response = in.readLine(); // Получение ответа
-                System.out.println(response);
                 if ("AVAILABLE".equals(response)) {
                     bookRoom(idGuest, idHotel);
-                    System.out.println("Гость " + idGuest + " успешно заселен в " + idHotel);
-
                 } else {
                     System.out.println("Гостиница " + idHotel + " недоступна. Заявка отменена.");
                 }
@@ -96,10 +101,25 @@ public class HotelRequestService {
     }
 
     private void bookRoom(int guestId, int hotelId) throws IOException {
+        if (validateBooking(guestId)){
+            BookingEntity booking = new BookingEntity( guestId, hotelId);
+            repositoryBooking.create(booking);
+            System.out.println("Гость " + guestId + " успешно заселен в " + hotelId);
+        }
+
+
+    }
+
+    private boolean validateBooking(int guestId) throws IOException {
         List<BookingEntity> bookings = csvParser.loadBookings();
-        bookings.add(new BookingEntity(guestId, hotelId));
-        System.out.println("Успешно забронировано: Гость ID " + guestId + " в отеле ID " + hotelId);
-        csvParser.saveBooking(bookings);
+        for (BookingEntity booking : bookings) {
+            if (booking.getGuestId() == guestId) {
+                System.out.println("Заселение отменено: гость уже заселен в отель " + booking.getHotelId());
+                return false;
+            }
+        }
+
+        return true;
     }
 
 }

@@ -6,6 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/Hotel/Hotel.iml" filepath="$PROJECT_DIR$/Hotel/Hotel.iml" />
       <module fileurl="file://$PROJECT_DIR$/HotelSystem/HotelSystem.iml" filepath="$PROJECT_DIR$/HotelSystem/HotelSystem.iml" />
       <module fileurl="file://$PROJECT_DIR$/InternshipWithoutMaven.iml" filepath="$PROJECT_DIR$/InternshipWithoutMaven.iml" />
+      <module fileurl="file://$PROJECT_DIR$/MonitoringSystem/MonitoringSystem.iml" filepath="$PROJECT_DIR$/MonitoringSystem/MonitoringSystem.iml" />
     </modules>
   </component>
 </project>

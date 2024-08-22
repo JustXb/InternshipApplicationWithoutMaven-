@@ -79,13 +79,14 @@ public class CsvParser {
             file.createNewFile();
         }
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
-            writer.write("GuestID, HotelID");
+            writer.write("ID, GuestID, HotelID");
             writer.newLine();
 
             if (!bookingEntities.isEmpty()) {
                 for (BookingEntity bookingEntity : bookingEntities) {
 
-                    writer.write(bookingEntity.getGuestId() + "," + bookingEntity.getHotelId());
+                    writer.write(bookingEntity.getId() + "," +bookingEntity.getGuestId() + ","
+                            + bookingEntity.getHotelId());
                     writer.newLine();
                 }
                 System.out.println("Данные успешно записаны в " + filePath);
@@ -110,14 +111,16 @@ public class CsvParser {
 
             String line;
             if ((line = reader.readLine()) != null) {
-
             }
             while ((line = reader.readLine()) != null) {
                 String[] fields = line.split(",");
-                if (fields.length == 2) {
+                if (fields.length == 3) {
+                    int id = Integer.parseInt(fields[0]);
+                    BookingEntity booking = new BookingEntity(Integer.parseInt(fields[1]), Integer.parseInt(fields[2]));
+                    booking.setId(id);
 
-                    BookingEntity bookingEntity = new BookingEntity(Integer.parseInt(fields[0]), Integer.parseInt(fields[1]));
-                    bookingEntities.add(bookingEntity);
+
+                    bookingEntities.add(booking);
                 }
             }
         } catch (IOException e) {

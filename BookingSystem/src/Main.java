@@ -1,5 +1,5 @@
 import console.ConsoleScanner;
-import service.HotelRequestService;
+import service.BookingService;
 
 import java.io.IOException;
 import java.util.Scanner;
@@ -8,8 +8,8 @@ public class Main {
     public static void main(String[] args) throws IOException {
         Scanner scanner = new Scanner(System.in);
 
-        HotelRequestService hotelRequestService = new HotelRequestService();
-        ConsoleScanner consoleScanner = new ConsoleScanner(scanner, hotelRequestService);
+        BookingService bookingService = new BookingService();
+        ConsoleScanner consoleScanner = new ConsoleScanner(scanner, bookingService);
 
 
 

@@ -2,7 +2,7 @@ package console;
 
 import exception.EnteredNotValidDataException;
 import repository.impl.GuestCsvRepository;
-import service.HotelRequestService;
+import service.BookingService;
 import transport.client.impl.HotelSocketClientImpl;
 
 import java.io.IOException;
@@ -19,11 +19,11 @@ public class ConsoleScanner {
     //TODO: не константы, объекты сеттим в main
     private static GuestCsvRepository repo = new GuestCsvRepository("guest.csv");
     private Scanner scanner;
-    private HotelRequestService hotelRequestService;
+    private BookingService bookingService;
 
-    public ConsoleScanner(Scanner scanner, HotelRequestService hotelRequestService) {
+    public ConsoleScanner(Scanner scanner, BookingService bookingService) {
         this.scanner = scanner;
-        this.hotelRequestService = hotelRequestService;
+        this.bookingService = bookingService;
     }
 
     public void parseCommand(String inputData){
@@ -46,16 +46,15 @@ public class ConsoleScanner {
                     System.out.println("Вы ввели неизвестную команду. Попробуйте еще раз");
                     scannedCommand = this.scan();
                 }
-                //TODO: сверка команд по логике работы
                 switch (command) {
                     case HELP:
                         command.printHelp();
                         break;
                     case CREATE:
-                        hotelRequestService.createGuest();
+                        bookingService.createGuest();
                         break;
                     case CHECKIN:
-                        hotelRequestService.checkIn();
+                        bookingService.checkIn();
                         break;
                     case EXIT:
                         System.exit(0);
@@ -84,7 +83,7 @@ public class ConsoleScanner {
         LOGGER.log(Level.INFO, "Enter Data");
         String data = scan();
         validateData(data);
-        hotelRequestService.validateDto();
+        bookingService.validateDto();
     }
 
 

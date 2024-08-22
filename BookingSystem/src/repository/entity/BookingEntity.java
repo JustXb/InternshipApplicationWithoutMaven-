@@ -1,6 +1,7 @@
 package repository.entity;
 
 public class BookingEntity {
+    private int id;
     private int guestId;
     private int hotelId;
 
@@ -10,6 +11,14 @@ public class BookingEntity {
     }
 
     public BookingEntity(){
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getGuestId() {
@@ -26,5 +35,12 @@ public class BookingEntity {
 
     public void setHotelId(int hotelId) {
         this.hotelId = hotelId;
+    }
+
+    public void getInfo() {
+        System.out.println("ID : " + this.id);
+        System.out.println("GuestID : " + this.guestId);
+        System.out.println("HotelID : " + this.hotelId +'\n');
+
     }
 }
