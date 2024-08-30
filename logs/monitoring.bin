@@ -1,0 +1,64 @@
+CREATEDГость добавлен: repository.entity.GuestEntity@28c97a5
+CREATEDГость добавлен: GuestEntity{id=15, name='Lionel', age=37, passportNumber='777777', address='Rosario'}
+CREATEDГость добавлен: GuestEntity{id=16, name='ffff', age=44, passportNumber='5345353', address='sada'}
+CREATEDГость14заселен в отель2
+MISTAKEГость13заселен в отель3
+MISTAKEДобавление гостя GuestEntity{id=16, name='Pasha', age=99, passportNumber='115599', address='Moscow'}неудачно
+MISTAKEДобавление гостя GuestEntity{id=16, name='Pavel', age=999, passportNumber='1515151', address='asdsada'}неудачно
+CREATEDГость добавлен: GuestEntity{id=16, name='Just', age=59, passportNumber='112266', address='Moscow'}
+MISTAKEДобавление гостя GuestEntity{id=17, name='Crisitino', age=38, passportNumber='115599', address='Porto'}неудачно
+MISTAKEГость17заселен в отель3
+CREATEDГость17заселен в отель1
+CREATEDГость17заселен в отель2
+CREATEDГость18заселен в отель2
+MISTAKEГость18заселен в отель2
+CREATEDГость18заселен в отель2
+CREATEDГость22заселен в отель2
+CREATEDГость22заселен в отель2
+CREATEDГость25заселен в отель2
+CREATEDГость22заселен в отель2
+CREATEDГость99заселен в отель1
+CREATEDГость99заселен в отель1
+CREATEDГость66заселен в отель2
+CREATEDГость77заселен в отель1
+CREATEDГость88заселен в отель2
+CREATEDГость88заселен в отель2
+MISTAKEГость45заселен в отель2
+MISTAKEГость66заселен в отель2
+CREATEDГость56заселен в отель2
+CREATEDГость97заселен в отель2
+CREATEDГость12заселен в отель2
+CREATEDГость76заселен в отель2
+CREATEDГость253заселен в отель2
+CREATEDГость54заселен в отель2
+CREATEDГость16заселен в отель2
+CREATEDГость добавлен: GuestEntity{id=17, name='Ruslan', age=21, passportNumber='102030', address='Moscow'}
+MISTAKEДобавление гостя GuestEntity{id=0, name='rr', age=120, passportNumber='102030', address='Lol'}неудачно
+CREATEDГость добавлен: GuestEntity{id=18, name='Ruslan', age=120, passportNumber='102030', address='Lol'}
+MISTAKEДобавление гостя GuestEntity{id=0, name='Ruslan', age=121, passportNumber='', address='Moscow'}неудачно
+MISTAKEДобавление гостя GuestEntity{id=0, name='Ruslab', age=121, passportNumber='101020', address='Moscow'}неудачно
+MISTAKEДобавление гостя GuestEntity{id=0, name='Ruslan', age=121, passportNumber='11231313', address='Lol'}неудачно
+MISTAKEДобавление гостя GuestEntity{id=0, name='Mixa', age=25, passportNumber='1234567', address='Rostov'}неудачно
+CREATEDГость добавлен: GuestEntity{id=19, name='Mixa', age=20, passportNumber='102030', address='Rostov'}
+MISTAKEДобавление гостя GuestEntity{id=0, name='Guest', age=25, passportNumber='12379', address='Moscow'}неудачно
+CREATEDГость добавлен: GuestEntity{id=20, name='Guest', age=25, passportNumber='123789', address='Moscow'}
+MISTAKEГостиница 3 недоступна. Заявка отменена.
+CREATEDГость 20заселен в отель 2
+CREATED Гость добавлен: GuestEntity{id=21, name='Alex', age=56, passportNumber='164978', address='London'}
+MISTAKE Гостиница 5 недоступна. Заявка отменена.
+CREATED Гость 21заселен в отель 2
+MISTAKE Гостиница 3 недоступна. Заявка отменена.
+MISTAKE Гостиница 3 недоступна. Заявка отменена.
+MISTAKE Гостиница 3 недоступна. Заявка отменена.
+MISTAKE Гостиница 3 недоступна. Заявка отменена.
+MISTAKE Гостиница 3 недоступна. Заявка отменена.
+CREATED Гость 21 заселен в отель 2
+CREATED Гость 20 заселен в отель 1
+MISTAKE Гостиница 3 недоступна. Заявка отменена.
+MISTAKE Гостиница 3 недоступна. Заявка отменена.
+MISTAKE Гостиница 2 недоступна. Заявка отменена.
+MISTAKE Гостиница 1 недоступна. Заявка отменена.
+MISTAKE Гостиница 5 недоступна. Заявка отменена.
+CREATED Гость 21 заселен в отель 2
+CREATED Гость 21 заселен в отель 3
+MISTAKE Гостиница 5 недоступна. Заявка отменена.

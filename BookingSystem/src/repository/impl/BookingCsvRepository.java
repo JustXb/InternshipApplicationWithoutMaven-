@@ -27,15 +27,10 @@ public class BookingCsvRepository  {
         bookings = csvParser.loadBookings();
         int id = bookings.size();
         bookingEntity.setId(++id);
-        if (validate(bookingEntity)){
-            bookings.add(bookingEntity);
-            csvParser.saveBooking(bookings);
-            for (BookingEntity s : bookings) {
-                s.getInfo();
-            }
-        }
-        else {
-            System.out.println("Некорректные данные");
+        bookings.add(bookingEntity);
+        csvParser.saveBooking(bookings);
+        for (BookingEntity s : bookings) {
+            s.getInfo();
         }
     }
 
@@ -54,7 +49,5 @@ public class BookingCsvRepository  {
         return false;
     }
 
-    private boolean validate(BookingEntity bookingEntity){
-        return true;
-    }
+
 }

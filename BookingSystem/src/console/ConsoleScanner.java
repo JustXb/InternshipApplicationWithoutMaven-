@@ -13,11 +13,8 @@ import java.util.logging.Logger;
 
 public class ConsoleScanner {
 
-    private static final Logger LOGGER = Logger.getLogger(HotelSocketClientImpl.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(ConsoleScanner.class.getName());
 
-    //TODO: вынести в сервис
-    //TODO: не константы, объекты сеттим в main
-    private static GuestCsvRepository repo = new GuestCsvRepository("guest.csv");
     private Scanner scanner;
     private BookingService bookingService;
 
@@ -35,17 +32,20 @@ public class ConsoleScanner {
     }
 
     public void checkCommand(){
-        while(true) {
+        while (true) {
             String scannedCommand = this.scan();
-            Commands command = Commands.valueOf(scannedCommand);
+
             try {
-                if (isKnownCommand(scannedCommand)){
-                    System.out.println("Znayu");
+                Commands command = Commands.valueOf(scannedCommand);
+
+                if (isKnownCommand(scannedCommand)) {
+                    LOGGER.info("Znayu");
+                } else {
+                    LOGGER.info("Ne znayu");
+                    continue;
                 }
-                else {
-                    System.out.println("Вы ввели неизвестную команду. Попробуйте еще раз");
-                    scannedCommand = this.scan();
-                }
+
+                // Выполнение команды
                 switch (command) {
                     case HELP:
                         command.printHelp();
@@ -58,15 +58,15 @@ public class ConsoleScanner {
                         break;
                     case EXIT:
                         System.exit(0);
-                    default:
-                        System.out.println("Unknown command");
-                        break;
                 }
-            } catch ( IOException e) {
-                //TODO: логгирировать
+            } catch (IllegalArgumentException e) {
+                LOGGER.warning("Unknown command: " + scannedCommand);
+                System.out.println("Вы ввели неизвестную команду. Попробуйте еще раз");
+            } catch (IOException e) {
+                LOGGER.severe("IOException occurred: " + e.getMessage());
                 throw new RuntimeException(e);
-            } catch (Exception exception){
-                //пример
+            } catch (Exception exception) {
+                LOGGER.severe("An unexpected error occurred: " + exception.getMessage());
             }
         }
     }

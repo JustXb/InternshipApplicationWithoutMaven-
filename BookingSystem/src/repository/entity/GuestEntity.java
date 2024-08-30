@@ -65,4 +65,15 @@ public class GuestEntity {
         System.out.println("Passport Number : " + this.passportNumber);
         System.out.println("Address : " + this.address + '\n');
     }
+
+    @Override
+    public String toString() {
+        return "GuestEntity{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", age=" + age +
+                ", passportNumber='" + passportNumber + '\'' +
+                ", address='" + address + '\'' +
+                '}';
+    }
 }
