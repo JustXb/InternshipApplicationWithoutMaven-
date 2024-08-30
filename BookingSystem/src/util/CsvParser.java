@@ -6,10 +6,14 @@ import repository.entity.GuestEntity;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 
 public class CsvParser {
-    private final String filePath;;
+    private final String filePath;
+    private static final String PATTERGUESTCSV = "ID,Name,Age,PassportNumber,Address";
+    private static final String PATTERNBOOKINGSCSV = "ID, GuestID, HotelID";
+    private static final Logger LOGGER = Logger.getLogger(CsvParser.class.getName());
 
     public CsvParser(String filePath) {
         this.filePath = filePath;
@@ -21,7 +25,7 @@ public class CsvParser {
             file.createNewFile();
         }
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
-            writer.write("ID,Name,Age,PassportNumber,Address");
+            writer.write(PATTERGUESTCSV);
             writer.newLine();
 
             if (!guests.isEmpty()) {
@@ -31,10 +35,10 @@ public class CsvParser {
                             + "," + guest.getAddress());
                     writer.newLine();
                 }
-                System.out.println("Данные успешно записаны в " + filePath);
+                LOGGER.info("Данные успешно записаны в " + filePath);
             }
             else {
-                System.out.println("Данные в файл " + filePath + " записать не удалось");
+                LOGGER.info("Данные в файл " + filePath + " записать не удалось");
             }
 
         } catch (IOException e) {
@@ -79,7 +83,7 @@ public class CsvParser {
             file.createNewFile();
         }
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
-            writer.write("ID, GuestID, HotelID");
+            writer.write(PATTERNBOOKINGSCSV);
             writer.newLine();
 
             if (!bookingEntities.isEmpty()) {
@@ -89,10 +93,11 @@ public class CsvParser {
                             + bookingEntity.getHotelId());
                     writer.newLine();
                 }
-                System.out.println("Данные успешно записаны в " + filePath);
+
+                LOGGER.info("Данные успешно записаны в " + filePath);
             }
             else {
-                System.out.println("Данные в файл " + filePath + " записать не удалось");
+                LOGGER.info("Данные в файл " + filePath + " записать не удалось");
             }
 
         } catch (IOException e) {
