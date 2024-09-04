@@ -1,12 +1,20 @@
 package repository.entity;
 
-public class GuestEntity {
+public class GuestEntity extends Entity {
 
     private int id;
     private String name;
     private int age;
     private String passportNumber;
     private String address;
+
+    public GuestEntity(int id, String name, int age, String passportNumber, String address) {
+        this.id = id;
+        this.name = name;
+        this.age = age;
+        this.passportNumber = passportNumber;
+        this.address = address;
+    }
 
     public GuestEntity(String name, int age, String passportNumber, String address) {
         this.name = name;

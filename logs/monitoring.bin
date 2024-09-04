@@ -63,3 +63,12 @@ CREATED Гость 21 заселен в отель 2
 CREATED Гость 21 заселен в отель 3
 MISTAKE Гостиница 5 недоступна. Заявка отменена.
 CREATED Гость 21 заселен в отель 3
+CREATED Гость добавлен: GuestEntity{id=1, name='Pavel', age=48, passportNumber='119900', address='Rostov'}
+CREATED Гость 20 заселен в отель 2
+CREATED Гость 20 заселен в отель 2
+CREATED Гость 19 заселен в отель 1
+CREATED Гость 18 заселен в отель 2
+MISTAKE Заселение отменено: гость уже заселен в отель 2
+MISTAKE Заселение отменено: гостя с таким ID не существует
+CREATED Гость добавлен: GuestEntity{id=22, name='Sergey', age=36, passportNumber='123678', address='Moscow'}
+MISTAKE Добавление гостя GuestEntity{id=0, name='cscas', age=24, passportNumber='441234', address='23'} неудачно

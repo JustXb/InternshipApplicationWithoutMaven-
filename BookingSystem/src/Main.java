@@ -3,27 +3,19 @@ import repository.impl.BookingCsvRepository;
 import repository.impl.GuestCsvRepository;
 import service.BookingService;
 import transport.client.impl.MonitoringSocketClientImpl;
+import util.Config;
 import util.CsvParser;
-
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.Properties;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args)  {
         Scanner scanner = new Scanner(System.in);
-        Properties properties = new Properties();
-        properties.load(new FileReader("resources/application.properties"));
+        Config config = new Config();
 
-        GuestCsvRepository repositoryGuest = new GuestCsvRepository(properties.getProperty
-                ("receiver.guests.csv.filepath"));
-        BookingCsvRepository repositoryBooking = new BookingCsvRepository(properties.getProperty
-                ("receiver.bookings.csv.filepath"));
-        CsvParser csvParserBooking = new CsvParser(properties.getProperty
-                ("receiver.guests.csv.filepath"));
-        CsvParser csvParserGuest = new CsvParser(properties.getProperty
-                ("receiver.bookings.csv.filepath"));
+        GuestCsvRepository repositoryGuest = new GuestCsvRepository(config.getGuestsPath());
+        BookingCsvRepository repositoryBooking = new BookingCsvRepository(config.getBookingsPath());
+        CsvParser csvParserBooking = new CsvParser(config.getBookingsPath());
+        CsvParser csvParserGuest = new CsvParser(config.getGuestsPath());
         MonitoringSocketClientImpl monitoringSocketClient = new MonitoringSocketClientImpl();
 
 

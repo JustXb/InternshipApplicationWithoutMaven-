@@ -6,6 +6,7 @@ import repository.entity.HotelAvailablilityEntity;
 import repository.entity.HotelEntity;
 import repository.impl.HotelJsonRepository;
 import transport.server.HotelServer;
+import util.Config;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -14,10 +15,11 @@ import java.util.List;
 import java.util.logging.Logger;
 
 public class HotelService {
-    private static final int PORT = 12345;
-    private static HotelJsonRepository hotelJsonRepository;
-    private static HotelServer hotelServer;
-    private static final Logger LOGGER = Logger.getLogger(HotelService.class.getName());
+    private final int PORT = 12345;
+    private final HotelJsonRepository hotelJsonRepository;
+    private final HotelServer hotelServer;
+    private final Logger LOGGER = Logger.getLogger(HotelService.class.getName());
+    private final Config config = new Config();
 
     public HotelService(HotelJsonRepository hotelJsonRepository, HotelServer hotelServer) {
         this.hotelJsonRepository = hotelJsonRepository;
@@ -28,12 +30,7 @@ public class HotelService {
 
         try (ServerSocket serverSocket = new ServerSocket(PORT)) {
             List<HotelEntity> hotels = hotelJsonRepository.loadHotelsFromFile();
-            StringBuilder sb = new StringBuilder();
-            for (HotelEntity hotelString : hotels) {
-                sb.append(hotelString.toString());
-                sb.append('\t');
-            }
-            String result = sb.toString();
+            String result = getString(hotels);
 
             LOGGER.info("Сервис гостиницы запущен и ожидает подключения...");
 
@@ -61,29 +58,40 @@ public class HotelService {
 
     }
 
-    private static boolean isHotelAvailable(int id) throws IOException {
+    private static String getString(List<HotelEntity> hotels) {
+        StringBuilder sb = new StringBuilder();
+        for (HotelEntity hotelString : hotels) {
+            sb.append(hotelString.toString());
+            sb.append('\t');
+        }
+        return sb.toString();
+    }
+
+    private boolean isHotelAvailable(int id) throws IOException {
         boolean isExist = false;
         List<HotelEntity> hotels = hotelJsonRepository.loadHotelsFromFile();
         for (HotelEntity hotel : hotels) {
             if (id == hotel.getId()) {
                 isExist = true;
+                break;
             }
         }
 
         if(!isExist){
             LOGGER.warning("Такого отеля не существует");
+            return isExist;
         }
 
         ObjectMapper objectMapper = new ObjectMapper();
         hotels = objectMapper.readValue(new File("hotels.json"), new TypeReference<List<HotelEntity>>() {});
-        List<HotelAvailablilityEntity> hotelsAvailability = objectMapper.readValue(new File("HotelsAvailability.json"),
+        List<HotelAvailablilityEntity> hotelsAvailability = objectMapper.readValue(new File(config.getHotelsAvailabilityPath()),
                 new TypeReference<List<HotelAvailablilityEntity>>() {});
         for (HotelEntity hotel : hotels) {
             if (hotel.getId() == id) {
                 for (HotelAvailablilityEntity hotelAvailability : hotelsAvailability) {
                     if (hotel.getId() == hotelAvailability.getId()) {
                         hotelAvailability.decreaseAvailableRooms();
-                        objectMapper.writeValue(new File("HotelsAvailability.json"), hotelsAvailability);
+                        objectMapper.writeValue(new File(config.getHotelsAvailabilityPath()), hotelsAvailability);
                         return true;
                     }
                 }

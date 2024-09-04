@@ -1,31 +1,24 @@
 package console;
 
-import exception.EnteredNotValidDataException;
-import repository.impl.GuestCsvRepository;
 import service.BookingService;
-import transport.client.impl.HotelSocketClientImpl;
 
 import java.io.IOException;
 import java.util.Locale;
 import java.util.Scanner;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ConsoleScanner {
 
     private static final Logger LOGGER = Logger.getLogger(ConsoleScanner.class.getName());
 
-    private Scanner scanner;
-    private BookingService bookingService;
+    private final Scanner scanner;
+    private final BookingService bookingService;
 
     public ConsoleScanner(Scanner scanner, BookingService bookingService) {
         this.scanner = scanner;
         this.bookingService = bookingService;
     }
 
-    public void parseCommand(String inputData){
-        String scannerCommand = scanner.nextLine().toUpperCase(Locale.ROOT);
-    }
 
     private String scan() {
         return scanner.nextLine().toUpperCase(Locale.ROOT);
@@ -37,13 +30,6 @@ public class ConsoleScanner {
 
             try {
                 Commands command = Commands.valueOf(scannedCommand);
-
-                if (isKnownCommand(scannedCommand)) {
-                    LOGGER.info("Znayu");
-                } else {
-                    LOGGER.info("Ne znayu");
-                    continue;
-                }
 
                 // Выполнение команды
                 switch (command) {
@@ -72,30 +58,6 @@ public class ConsoleScanner {
     }
 
 
-
-    private void validateData(String data) throws EnteredNotValidDataException {
-        if (data == null) {
-            throw new EnteredNotValidDataException("InputData is null");
-        }
-    }
-
-    private void proccessData() throws EnteredNotValidDataException {
-        LOGGER.log(Level.INFO, "Enter Data");
-        String data = scan();
-        validateData(data);
-        bookingService.validateDto();
-    }
-
-
-
-    private boolean isKnownCommand(String command) {
-        for (Commands commands : Commands.values()) {
-            if (commands.name().equalsIgnoreCase(command)) {
-                return true;
-            }
-        }
-        return false;
-    }
 
 
 }

@@ -11,21 +11,18 @@ import java.util.logging.Logger;
 
 public class CsvParser {
     private final String filePath;
-    private static final String PATTERGUESTCSV = "ID,Name,Age,PassportNumber,Address";
-    private static final String PATTERNBOOKINGSCSV = "ID, GuestID, HotelID";
-    private static final Logger LOGGER = Logger.getLogger(CsvParser.class.getName());
+    private final String PATTERN_GUEST_CSV = "ID,Name,Age,PassportNumber,Address";
+    private final String PATTERN_BOOKINGS_CSV = "ID, GuestID, HotelID";
+    private final Logger LOGGER = Logger.getLogger(CsvParser.class.getName());
 
     public CsvParser(String filePath) {
         this.filePath = filePath;
     }
 
     public void saveGuests(List<GuestEntity> guests) throws IOException {
-        File file = new File(filePath);
-        if (!file.exists()) {
-            file.createNewFile();
-        }
+        checkIfFileExist();
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
-            writer.write(PATTERGUESTCSV);
+            writer.write(PATTERN_GUEST_CSV);
             writer.newLine();
 
             if (!guests.isEmpty()) {
@@ -47,26 +44,20 @@ public class CsvParser {
     }
 
     public List<GuestEntity> loadGuests() throws IOException {
-        File file = new File(filePath);
-        if (!file.exists()) {
-            file.createNewFile();
-        }
+        checkIfFileExist();
         List<GuestEntity> guests = new ArrayList<>();
 
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
 
-            String line;
-            if ((line = reader.readLine()) != null) {
+            String readHeaderOfCsv = reader.readLine();
 
-            }
-            while ((line = reader.readLine()) != null) {
-                String[] fields = line.split(",");
+            String dataline;
+
+            while ((dataline = reader.readLine()) != null) {
+                String[] fields = dataline.split(",");
                 if (fields.length == 5) {
-                    int id = Integer.parseInt(fields[0]);
-                    GuestEntity guest = new GuestEntity(fields[1], Integer.parseInt(fields[2]), fields[3], fields[4]);
-                    guest.setId(id);
-
-
+                    GuestEntity guest = new GuestEntity(Integer.parseInt(fields[0]) ,fields[1],
+                            Integer.parseInt(fields[2]), fields[3], fields[4]);
                     guests.add(guest);
                 }
             }
@@ -78,12 +69,9 @@ public class CsvParser {
 
 
     public void saveBooking(List<BookingEntity> bookingEntities) throws IOException {
-        File file = new File(filePath);
-        if (!file.exists()) {
-            file.createNewFile();
-        }
+        checkIfFileExist();
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
-            writer.write(PATTERNBOOKINGSCSV);
+            writer.write(PATTERN_BOOKINGS_CSV);
             writer.newLine();
 
             if (!bookingEntities.isEmpty()) {
@@ -105,26 +93,26 @@ public class CsvParser {
         }
     }
 
-    public List<BookingEntity> loadBookings() throws IOException {
+    private void checkIfFileExist() throws IOException {
         File file = new File(filePath);
         if (!file.exists()) {
             file.createNewFile();
         }
+    }
+
+    public List<BookingEntity> loadBookings() throws IOException {
+        checkIfFileExist();
         List<BookingEntity> bookingEntities = new ArrayList<>();
 
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
 
-            String line;
-            if ((line = reader.readLine()) != null) {
-            }
-            while ((line = reader.readLine()) != null) {
-                String[] fields = line.split(",");
+            String readHeaderOfCsv = reader.readLine();
+            String dataline;
+            while ((dataline = reader.readLine()) != null) {
+                String[] fields = dataline.split(",");
                 if (fields.length == 3) {
-                    int id = Integer.parseInt(fields[0]);
-                    BookingEntity booking = new BookingEntity(Integer.parseInt(fields[1]), Integer.parseInt(fields[2]));
-                    booking.setId(id);
-
-
+                    BookingEntity booking = new BookingEntity(Integer.parseInt(fields[0]),Integer.parseInt(fields[1]),
+                            Integer.parseInt(fields[2]));
                     bookingEntities.add(booking);
                 }
             }
@@ -135,3 +123,5 @@ public class CsvParser {
     }
 
 }
+
+//

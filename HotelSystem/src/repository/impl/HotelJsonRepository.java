@@ -13,22 +13,17 @@ import java.util.List;
 
 public class HotelJsonRepository {
 
-    private List<HotelEntity> hotels;
-    private static final String hotelsfilepath = "hotels.json";
+    private final String hotelsfilepath;
 
+    public HotelJsonRepository(String hotelsfilepath) {
+        this.hotelsfilepath = hotelsfilepath;
+
+    }
 
     public List<HotelEntity> loadHotelsFromFile() throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
-        hotels = objectMapper.readValue(new File(hotelsfilepath), new TypeReference<List<HotelEntity>>() {});
-        return hotels;
+        return objectMapper.readValue(new File(hotelsfilepath), new TypeReference<List<HotelEntity>>() {
+        });
     }
-
-
-    public void saveHotelsToFile(String filePath) throws IOException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.writeValue(new File(filePath), hotels);
-    }
-
-
 
 }
