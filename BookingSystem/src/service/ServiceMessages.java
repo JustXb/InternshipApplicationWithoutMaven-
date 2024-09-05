@@ -11,13 +11,26 @@ public enum ServiceMessages {
     WRONG_ADDRESS("Неверно указан адрес"),
     WRONG_PASSPORT("Номер паспорта не валиден"),
     WRONG_COUNT_NUMBER_PASSPORT("Номер паспорта должен содержать ровно 6 цифр."),
-    SELECT_GUEST("Выберите гостя по его ID");
+    SELECT_GUEST("Выберите гостя по его ID"),
+    ERROR_MESSAGE_EMPTY_NAME("Имя не может быть пустым."),
+    ERROR_MESSAGE_EMPTY_AGE("Возраст не может быть пустым."),
+    ERROR_MESSAGE_EMPTY_ADDRESS("Адрес не может быть пустым."),
+    ERROR_MESSAGE_EMPTY_PASSPORT("Номер паспорта не может быть пустым."),
+    ERROR_AGE_NOT_INT("Ошибка: возраст должен быть числом."),
+    ERROR_CREATE_GUEST("Ошибка при создании гостя: " ),
+    UNKNOWN_ERROR("Неизвестная ошибка: "),
+    REQUEST_TO_HOTEL_SYSTEM("Реквест к сервису отелей");
 
 
 
-    private final String description;
 
-    ServiceMessages(String description) {
-        this.description = description;
+    private final String message;
+
+    ServiceMessages(String message) {
+        this.message = message;
+    }
+
+    public String getMessage() {
+        return message;
     }
 }

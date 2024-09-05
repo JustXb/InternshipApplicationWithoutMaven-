@@ -15,7 +15,6 @@ import java.util.List;
 import java.util.logging.Logger;
 
 public class HotelService {
-    private final int PORT = 12345;
     private final HotelJsonRepository hotelJsonRepository;
     private final HotelServer hotelServer;
     private final Logger LOGGER = Logger.getLogger(HotelService.class.getName());
@@ -28,11 +27,11 @@ public class HotelService {
 
     public void responseHotels() {
 
-        try (ServerSocket serverSocket = new ServerSocket(PORT)) {
+        try (ServerSocket serverSocket = new ServerSocket(config.getPort())) {
             List<HotelEntity> hotels = hotelJsonRepository.loadHotelsFromFile();
             String result = getString(hotels);
 
-            LOGGER.info("Сервис гостиницы запущен и ожидает подключения...");
+            LOGGER.info(ServiceMessages.WAITING_CONNECT.getMessage());
 
             while (true) {
                 try (Socket clientSocket = serverSocket.accept();
@@ -41,12 +40,12 @@ public class HotelService {
                     out.println(result);
 
                     int hotelId = Integer.parseInt(in.readLine());
-                    LOGGER.info("Запрос на доступность гостиницы: " + hotelId);
+                    LOGGER.info(ServiceMessages.REQUEST_HOTEL_AVAILABILITY.getMessage() + hotelId);
 
                     if (isHotelAvailable(hotelId)) {
-                        out.println("AVAILABLE");
+                        out.println(ServiceMessages.AVAILABLE.getMessage());
                     } else {
-                        out.println("UNAVAILABLE");
+                        out.println(ServiceMessages.UNAVAILABLE.getMessage());
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -78,21 +77,25 @@ public class HotelService {
         }
 
         if(!isExist){
-            LOGGER.warning("Такого отеля не существует");
+            LOGGER.warning(ServiceMessages.WRONG_HOTEL.getMessage());
             return isExist;
         }
 
         ObjectMapper objectMapper = new ObjectMapper();
-        hotels = objectMapper.readValue(new File("hotels.json"), new TypeReference<List<HotelEntity>>() {});
+        hotels = objectMapper.readValue(new File(config.getHotelsPath()), new TypeReference<List<HotelEntity>>() {});
         List<HotelAvailablilityEntity> hotelsAvailability = objectMapper.readValue(new File(config.getHotelsAvailabilityPath()),
                 new TypeReference<List<HotelAvailablilityEntity>>() {});
         for (HotelEntity hotel : hotels) {
             if (hotel.getId() == id) {
                 for (HotelAvailablilityEntity hotelAvailability : hotelsAvailability) {
                     if (hotel.getId() == hotelAvailability.getId()) {
-                        hotelAvailability.decreaseAvailableRooms();
-                        objectMapper.writeValue(new File(config.getHotelsAvailabilityPath()), hotelsAvailability);
-                        return true;
+                        if(hotelAvailability.decreaseAvailableRooms()){
+                            objectMapper.writeValue(new File(config.getHotelsAvailabilityPath()), hotelsAvailability);
+                            return true;
+                        }
+                        else{
+                            return false;
+                        }
                     }
                 }
             }

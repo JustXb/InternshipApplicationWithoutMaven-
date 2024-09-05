@@ -14,7 +14,7 @@ public class Config {
         Properties properties = new Properties();
         try (FileInputStream input = new FileInputStream("resources/application.properties")) {
             properties.load(input);
-            this.port = Integer.parseInt(properties.getProperty("receiver.port"));
+            this.port = Integer.parseInt(properties.getProperty("processor.port"));
             this.hotelsPath = properties.getProperty("processor.hotels.json.filepath");
             this.hotelsAvailabilityPath = properties.getProperty("processor.hotelsAvailability.json.filepath");
         } catch (IOException e) {

@@ -5,6 +5,7 @@ import transport.server.EventType;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.Date;
 import java.util.Properties;
@@ -23,7 +24,7 @@ public class MonitoringService {
             throw new RuntimeException(e);
         }
         try {
-            Files.createDirectories(Path.of(properties.getProperty("LOG_DIRECTORY")));
+            Files.createDirectories(Paths.get(properties.getProperty("LOG_DIRECTORY")));
         } catch (IOException e) {
             e.printStackTrace();
         }

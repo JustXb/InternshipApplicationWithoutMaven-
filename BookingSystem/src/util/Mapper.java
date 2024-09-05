@@ -1,12 +1,14 @@
 package util;
 
 import repository.entity.GuestEntity;
+import transport.dto.request.GuestDTO;
 import transport.dto.request.RequestDto;
 
+import java.util.UUID;
+
 public class Mapper {
-    public RequestDto toDto(GuestEntity guestEntity){
-        RequestDto dto = new RequestDto();
-        dto.setId(guestEntity.getId());
+    public GuestDTO toDto(GuestEntity guestEntity){
+        GuestDTO dto = new GuestDTO();
         dto.setName(guestEntity.getName());
         dto.setAge(guestEntity.getAge());
         dto.setAddress(guestEntity.getAddress());
@@ -14,9 +16,8 @@ public class Mapper {
         return dto;
     }
 
-    public GuestEntity toEntity(RequestDto dto){
+    public GuestEntity toEntity(GuestDTO dto){
         GuestEntity guestEntity = new GuestEntity();
-        guestEntity.setId(dto.getId());
         guestEntity.setName(dto.getName());
         guestEntity.setAge(dto.getAge());
         guestEntity.setAddress(dto.getAddress());

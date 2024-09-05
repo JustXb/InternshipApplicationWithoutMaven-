@@ -8,7 +8,7 @@ public class HotelEntity {
     public HotelEntity() {
     }
 
-    public HotelEntity(int id, String hotelName, int available) {
+    public HotelEntity(int id, String hotelName) {
         this.id = id;
         this.hotelName = hotelName;
 

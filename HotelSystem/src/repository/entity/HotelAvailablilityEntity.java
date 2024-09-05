@@ -26,11 +26,12 @@ public class HotelAvailablilityEntity {
         this.availability = availability;
     }
 
-    public void decreaseAvailableRooms() {
+    public boolean decreaseAvailableRooms() {
         if (availability > 0) {
             availability--;
+            return true;
         } else {
-            throw new IllegalStateException("Нет доступных мест");
+            return false;
         }
     }
 }

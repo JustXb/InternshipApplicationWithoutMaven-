@@ -1,38 +1,27 @@
-package repository.entity;
+package transport.dto.request;
+import java.io.Serializable;
 
-public class GuestEntity extends Entity {
+public class GuestDTO implements Serializable {
 
-    private int id;
+    private static final long serialVersionUID = 1L;
+
     private String name;
     private int age;
     private String passportNumber;
     private String address;
 
-    public GuestEntity(int id, String name, int age, String passportNumber, String address) {
-        this.id = id;
+    public GuestDTO() {
+    }
+
+    public GuestDTO(String name, int age, String passportNumber, String address) {
         this.name = name;
         this.age = age;
         this.passportNumber = passportNumber;
         this.address = address;
     }
 
-    public GuestEntity(String name, int age, String passportNumber, String address) {
-        this.name = name;
-        this.age = age;
-        this.passportNumber = passportNumber;
-        this.address = address;
-    }
 
-    public GuestEntity() {
-    }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
@@ -66,18 +55,9 @@ public class GuestEntity extends Entity {
         this.address = address;
     }
 
-    public void getInfo() {
-        System.out.println("ID : " + this.id);
-        System.out.println("Name : " + this.name);
-        System.out.println("Age : " + this.age);
-        System.out.println("Passport Number : " + this.passportNumber);
-        System.out.println("Address : " + this.address + '\n');
-    }
-
-    @Override
     public String toString() {
         return "GuestEntity{" +
-                "id=" + id +
+                "id=" + serialVersionUID +
                 ", name='" + name + '\'' +
                 ", age=" + age +
                 ", passportNumber='" + passportNumber + '\'' +

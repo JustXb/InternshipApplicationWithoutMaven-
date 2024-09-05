@@ -48,9 +48,6 @@ public class ConsoleScanner {
             } catch (IllegalArgumentException e) {
                 LOGGER.warning("Unknown command: " + scannedCommand);
                 System.out.println("Вы ввели неизвестную команду. Попробуйте еще раз");
-            } catch (IOException e) {
-                LOGGER.severe("IOException occurred: " + e.getMessage());
-                throw new RuntimeException(e);
             } catch (Exception exception) {
                 LOGGER.severe("An unexpected error occurred: " + exception.getMessage());
             }
