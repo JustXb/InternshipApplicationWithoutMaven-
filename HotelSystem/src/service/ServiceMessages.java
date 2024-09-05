@@ -5,6 +5,7 @@ public enum ServiceMessages {
     REQUEST_HOTEL_AVAILABILITY("Запрос на доступность гостиницы: "),
     AVAILABLE("AVAILABLE"),
     UNAVAILABLE("UNAVAILABLE"),
+    UNAVAILABLE_NOAVAILABILITY("UNAVAILABLE_NOAVAILABILITY"),
     WRONG_HOTEL("Такого отеля не существует");
 
 

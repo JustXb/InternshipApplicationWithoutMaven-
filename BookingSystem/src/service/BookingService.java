@@ -111,7 +111,7 @@ public class BookingService {
 
             // Проверяем на пустую строку
             if (input.isEmpty()) {
-                System.out.println("Ошибка: Ввод не может быть пустым. Повторите ввод.");
+                LOGGER.warning("Ошибка: Ввод не может быть пустым. Повторите ввод.");
                 continue;
             }
 
@@ -119,7 +119,7 @@ public class BookingService {
                 guestId = Integer.parseInt(input);
                 break;
             } catch (NumberFormatException e) {
-                System.out.println("Ошибка: Введите корректный числовой идентификатор гостя.");
+                LOGGER.warning("Ошибка: Введите корректный числовой идентификатор гостя.");
             }
         }
 
@@ -131,9 +131,16 @@ public class BookingService {
         if ("AVAILABLE".equals(getAvailabilityResponse)) {
             bookRoom(idGuest, idHotel);
         } else {
-            LOGGER.warning("Такого отеля не существует");
-            monitoringSocketClient.sendEvent(EventType.MISTAKE, "Гостиница " + idHotel +
-                    " недоступна. Заявка отменена.");
+            if("UNAVAILABLE".equals(getAvailabilityResponse)){
+                LOGGER.warning("Такого отеля не существует");
+                monitoringSocketClient.sendEvent(EventType.MISTAKE, "Гостиница " + idHotel +
+                        " недоступна. Заявка отменена.");
+            }
+            else{
+                LOGGER.warning("В этом отеле нет мест");
+                monitoringSocketClient.sendEvent(EventType.MISTAKE, "Гостиница " + idHotel +
+                        " недоступна. Заявка отменена.");
+            }
         }
     }
 

@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 public class HotelService {
+    private final int PORT = 12345;
     private final HotelJsonRepository hotelJsonRepository;
     private final HotelServer hotelServer;
     private final Logger LOGGER = Logger.getLogger(HotelService.class.getName());
@@ -27,7 +28,7 @@ public class HotelService {
 
     public void responseHotels() {
 
-        try (ServerSocket serverSocket = new ServerSocket(config.getPort())) {
+        try (ServerSocket serverSocket = new ServerSocket(PORT)) {
             List<HotelEntity> hotels = hotelJsonRepository.loadHotelsFromFile();
             String result = getString(hotels);
 
@@ -40,12 +41,21 @@ public class HotelService {
                     out.println(result);
 
                     int hotelId = Integer.parseInt(in.readLine());
+                    HotelAvailablilityEntity hotel = hotelJsonRepository.readHotelFromFile(hotelId);
                     LOGGER.info(ServiceMessages.REQUEST_HOTEL_AVAILABILITY.getMessage() + hotelId);
 
                     if (isHotelAvailable(hotelId)) {
                         out.println(ServiceMessages.AVAILABLE.getMessage());
                     } else {
-                        out.println(ServiceMessages.UNAVAILABLE.getMessage());
+                        if (hotel == null) {
+                            out.println(ServiceMessages.UNAVAILABLE.getMessage());
+                        } else {
+                            if (!hotel.decreaseAvailableRooms()) {
+                                out.println(ServiceMessages.UNAVAILABLE_NOAVAILABILITY.getMessage());
+                            } else {
+                                out.println(ServiceMessages.AVAILABLE.getMessage());
+                            }
+                        }
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
